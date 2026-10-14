@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedOrd — One platform, every pharmacy in the loop</title>
+<meta name="description" content="MedOrd connects medicine agencies and medical stores on one platform — stock, orders, billing and delivery, all in sync.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1F1C;
+    --bg-soft:#0F2B27;
+    --surface:#14352F;
+    --surface-alt:#1B453D;
+    --teal:#21D0B5;
+    --teal-dim:#0E7A69;
+    --cream:#F4F1E8;
+    --ink:#0A1F1C;
+    --amber:#E8A15C;
+    --line:rgba(244,241,232,0.12);
+    --line-strong:rgba(244,241,232,0.22);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(10,31,28,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 28px;
+    max-width:1120px;
+    margin:0 auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:20px;
+  }
+  .brand img{width:30px;height:30px;border-radius:8px;}
+  .navlinks{display:flex;gap:28px;font-size:14px;}
+  .navlinks a{
+    text-decoration:none;
+    color:var(--cream);
+    opacity:0.75;
+    transition:opacity .15s ease;
+  }
+  .navlinks a:hover{opacity:1;}
+  @media (max-width:720px){ .navlinks{display:none;} }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+    .hero{padding:56px 0 48px;}
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    color:var(--teal);
+    border:1px solid var(--teal-dim);
+    background:rgba(33,208,181,0.08);
+    padding:6px 14px;
+    border-radius:100px;
+    margin-bottom:24px;
+  }
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);}
+  .hero h1{
+    font-size:clamp(2.2rem, 4.6vw, 3.4rem);
+    line-height:1.08;
+    max-width:12ch;
+  }
+  .hero p.lead{
+    margin-top:22px;
+    font-size:18px;
+    color:rgba(244,241,232,0.78);
+    max-width:46ch;
+  }
+  .hero-actions{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-block;
+    padding:13px 22px;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:500;
+    text-decoration:none;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--teal); color:var(--ink);}
+  .btn-ghost{border-color:var(--line-strong); color:var(--cream);}
+
+  .hero-art{
+    position:relative;
+    display:flex;
+    justify-content:center;
+  }
+  .hero-art .frame{
+    background:linear-gradient(155deg, var(--surface-alt), var(--surface));
+    border:1px solid var(--line-strong);
+    border-radius:28px;
+    padding:36px;
+    width:min(320px, 80vw);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+  .hero-art img{border-radius:20px;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  section + section{border-top:1px solid var(--line);}
+  .section-head{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:48px;
+    margin-bottom:44px;
+  }
+  @media (max-width:780px){ .section-head{grid-template-columns:1fr; gap:18px;} }
+  .section-head h2{font-size:clamp(1.6rem, 3vw, 2.2rem);}
+  .section-head .desc{color:rgba(244,241,232,0.75); font-size:16px; max-width:52ch;}
+
+  .media{
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background:var(--surface);
+  }
+  .media img{width:100%;}
+
+  /* ---------- Problem / Solution ---------- */
+  .ps-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+  }
+  @media (max-width:780px){ .ps-row{grid-template-columns:1fr;} }
+  .ps-card{
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px;
+  }
+  .ps-card h3{font-size:19px; margin-bottom:12px;}
+  .ps-card p{color:rgba(244,241,232,0.75); font-size:15px; margin:0 0 18px;}
+  .ps-card .media{margin:0;}
+
+  /* ---------- Features tabs ---------- */
+  .tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .tab-btn{
+    font-family:inherit;
+    font-size:14px;
+    padding:10px 18px;
+    border-radius:100px;
+    border:1px solid var(--line-strong);
+    background:transparent;
+    color:var(--cream);
+    cursor:pointer;
+    opacity:0.65;
+  }
+  .tab-btn.active{
+    background:var(--teal);
+    color:var(--ink);
+    border-color:var(--teal);
+    opacity:1;
+  }
+  .feature-grid{
+    display:none;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px 32px;
+  }
+  .feature-grid.active{display:grid;}
+  @media (max-width:640px){ .feature-grid{grid-template-columns:1fr;} }
+  .feature-grid div{
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+    color:rgba(244,241,232,0.88);
+  }
+
+  /* ---------- Tech stack ---------- */
+  .stack-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .stack-chip{
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    padding:12px 18px;
+    font-size:14px;
+    background:var(--bg-soft);
+  }
+
+  /* ---------- Screenshots filmstrip ---------- */
+  .filmstrip{
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+    padding-bottom:14px;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .filmstrip::-webkit-scrollbar{height:8px;}
+  .filmstrip::-webkit-scrollbar-thumb{background:var(--surface-alt); border-radius:10px;}
+  .shot{
+    flex:0 0 auto;
+    width:200px;
+    scroll-snap-align:start;
+  }
+  .shot .media{margin-bottom:10px;}
+  .shot .label{
+    font-size:13px;
+    color:rgba(244,241,232,0.55);
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:48px 0 60px;
+    border-top:1px solid var(--line);
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  footer .dev{font-family:'Fraunces', serif; font-size:18px;}
+  footer .role{color:rgba(244,241,232,0.6); font-size:14px; margin-top:4px;}
+  footer .note{color:rgba(244,241,232,0.5); font-size:13px; max-width:36ch;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+  }
+
+  .download-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: white;
+  background: #2563eb;
+  transition: 0.2s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.web-btn {
+  background: #111827;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="brand">
+      <img src="app%20pictures/app_icon.jpeg" alt="MedOrd icon">
+      MedOrd
+    </div>
+    <div class="navlinks">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#features">Features</a>
+      <a href="#stack">Tech</a>
+      <a href="#screens">Screens</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill"><span class="dot"></span>Private repo · active development</span>
+      <h1>One platform, every pharmacy in the loop.</h1>
+      <p class="lead">MedOrd connects medicine agencies and medical stores — stock, orders, billing and delivery, tracked in one place instead of scattered across calls and paper ledgers.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#features">See what it does</a>
+        <a class="btn btn-ghost" href="#download">Download status</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="frame">
+        <img src="app%20pictures/app_icon.jpeg" alt="MedOrd app icon">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="ps-row">
+      <div class="ps-card">
+        <h3>The problem</h3>
+        <p>Ordering between agencies and medical stores is still mostly manual — phone calls, paper ledgers, scattered spreadsheets. Stock visibility is poor and invoicing is slow, with no reliable way to track an order end to end.</p>
+        <div class="media"><img src="app%20pictures/problem.png" alt="The problem MedOrd addresses"></div>
+      </div>
+      <div class="ps-card" id="solution">
+        <h3>The solution</h3>
+        <p>Agencies publish live stock and offers, stores order directly against it, and every order is tracked from placement through OTP-verified delivery — billing and reporting handled automatically along the way.</p>
+        <div class="media"><img src="app%20pictures/solution.png" alt="MedOrd's solution"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Built for two very different days</h2>
+      <p class="desc">An agency's day is stock, billing and dispatch. A store's day is ordering, tracking and getting paid quickly. MedOrd gives each side the view built for their work.</p>
+    </div>
+
+    <div class="media" style="margin-bottom:32px;">
+      <img src="app%20pictures/features.jpeg" alt="MedOrd feature overview">
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="agency">For agencies</button>
+      <button class="tab-btn" data-tab="store">For medical stores</button>
+    </div>
+
+    <div class="feature-grid active" id="agency">
+      <div>Stock management — batch, expiry, MRP & GST</div>
+      <div>Branch-wise inventory</div>
+      <div>Order management & task assignment</div>
+      <div>Customer billing with PDF invoices</div>
+      <div>CSV / PDF export, auto monthly reports</div>
+      <div>Google Maps route navigation</div>
+      <div>OTP-based order completion</div>
+      <div>Delivery partner management</div>
+      <div>Razorpay payment gateway</div>
+      <div>Drug recall & clinical trial alerts</div>
+      <div>Medicine & offer posters</div>
+      <div>Hiring management & premium subscriptions</div>
+    </div>
+
+    <div class="feature-grid" id="store">
+      <div>Browse agency medicines & stock availability</div>
+      <div>Place and track orders</div>
+      <div>Order history</div>
+      <div>Billing & invoice download</div>
+      <div>View posters, offers and announcements</div>
+      <div>Google Maps route navigation</div>
+      <div>OTP order verification</div>
+      <div>Secure online payments</div>
+      <div>Drug recall & clinical trial alerts</div>
+      <div>WHO & trending healthcare news</div>
+      <div>Firebase push notifications</div>
+      <div>Help & support</div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Under the hood</h2>
+      <p class="desc">Kotlin and Jetpack Compose on the client, Firebase running the backend, MVVM holding it together.</p>
+    </div>
+    <div class="media" style="margin-bottom:28px;">
+      <img src="app%20pictures/architecture.png" alt="MedOrd system architecture">
+    </div>
+    <div class="stack-row">
+      <span class="stack-chip">Kotlin</span>
+      <span class="stack-chip">Jetpack Compose</span>
+      <span class="stack-chip">Material 3</span>
+      <span class="stack-chip">MVVM</span>
+      <span class="stack-chip">Firebase Authentication</span>
+      <span class="stack-chip">Cloud Firestore</span>
+      <span class="stack-chip">Firebase Storage</span>
+      <span class="stack-chip">Cloud Functions</span>
+      <span class="stack-chip">Cloud Messaging</span>
+      <span class="stack-chip">Google Maps SDK</span>
+      <span class="stack-chip">Razorpay</span>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Inside the app</h2>
+      <p class="desc">A walk through the agency and medical-store experience, screen by screen.</p>
+    </div>
+    <div class="filmstrip">
+      <div class="shot"><div class="media"><img src="app%20pictures/p1.jpeg" alt="Screen 1"></div><div class="label">Screen 01</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p2.jpeg" alt="Screen 2"></div><div class="label">Screen 02</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p3.jpeg" alt="Screen 3"></div><div class="label">Screen 03</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p4.jpeg" alt="Screen 4"></div><div class="label">Screen 04</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p5.jpeg" alt="Screen 5"></div><div class="label">Screen 05</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p6.jpeg" alt="Screen 6"></div><div class="label">Screen 06</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p7.jpeg" alt="Screen 7"></div><div class="label">Screen 07</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p8.jpeg" alt="Screen 8"></div><div class="label">Screen 08</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p9.jpeg" alt="Screen 9"></div><div class="label">Screen 09</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p10.jpeg" alt="Screen 10"></div><div class="label">Screen 10</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p11.jpeg" alt="Screen 11"></div><div class="label">Screen 11</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p12.jpeg" alt="Screen 12"></div><div class="label">Screen 12</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p13.jpeg" alt="Screen 13"></div><div class="label">Screen 13</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p14.jpeg" alt="Screen 14"></div><div class="label">Screen 14</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p15.jpeg" alt="Screen 15"></div><div class="label">Screen 15</div></div>
+      <div class="shot"><div class="media"><img src="app%20pictures/p16.jpeg" alt="Screen 16"></div><div class="label">Screen 16</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="analysis">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Where MedOrd stands</h2>
+      <p class="desc">A look at how MedOrd's approach compares against the manual, disconnected process most agencies and stores run today.</p>
+    </div>
+    <div class="media">
+      <img src="app%20pictures/Analysis%20%26%20compare.png" alt="Competitive analysis and comparison">
+    </div>
+  </div>
+</section>
+<section id="Features">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Key Features</h2>
+      <p class="desc">Here are the main features that make MedOrd stand out:</p>
+    </div>
+    <div class="media">
+      <img src="app%20pictures/features%20graphics.png" alt="Key features of MedOrd">
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:0;">
+      <h2>Get MedOrd</h2>
+
+      <p class="desc">
+        MedOrd is available on Android and Web. Use the platform that works
+        best for your pharmacy or agency.
+      </p>
+
+      <div class="download-actions">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.lokii8107719620.medord"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="download-btn"
+        >
+          Download Android App
+        </a>
+
+        <a
+          href="https://med-ord.vercel.app/login"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="download-btn web-btn"
+        >
+          Open Web App
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="dev">Lokesh Kumar</div>
+      <div class="role">Robotics &amp; Automation Engineering · NIT Kurukshetra</div>
+    </div>
+    <div class="note">MedOrd is an independent project connecting medicine agencies and medical stores across India.</div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.feature-grid').forEach(function(g){ g.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
